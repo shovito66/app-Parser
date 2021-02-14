@@ -49,11 +49,12 @@ for file in files:
     
 
     for item in data:
-        nestedDictonary[item["category"].lower()][item["severity"].lower()]  = item["name"]
+        nestedDictonary[item["category"].lower()][item["severity"].lower()].append(item["name"])
 
     print("\n\n-------------APP PKG NAME:{}-------------".format(pkgName))
     for key, value in nestedDictonary.items():
         for k,v in value.items():
+             # @@@@todo: need to modify this
             print("Category:{}\t\tSevirity:{}\t\tNo:{}".format(key,k,len(v)))
     
     # Closing file

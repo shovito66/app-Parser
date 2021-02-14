@@ -1,0 +1,601 @@
+*************************************************************************
+**   AndroBugs Framework - Android App Security Vulnerability Scanner  **
+**                            version: 1.0.0                           **
+**     author: Yu-Cheng Lin (@AndroBugs, http://www.AndroBugs.com)     **
+**               contact: androbugs.framework@gmail.com                **
+*************************************************************************
+Platform: Android
+Package Name: bd.com.jb.janatabank
+Package Version Name: 1.0.1
+Package Version Code: 21
+Min Sdk: 21
+Target Sdk: 28
+MD5   : 7d41ce1146fe23016a3871e98043ec98
+SHA1  : 0c056761e51e5f6d0d0664c01f7571172c446431
+SHA256: 7bfcdb91d815e0e75c4abe6cf25350549921b18a61ba0a89973f05c3773f9532
+SHA512: f7ba4f60dfcdffa48df95d032a0facc4dd83cafd3cb5e1e440d32a16d66f6359160c37a2ccf2c030240a92469bacaf0d3d2078bd06d051c1e7c3f051718324ee
+Analyze Signature: 2f7bc4cb197dcbc24434c01b3f6702ac35dd38cf1d0c29dc4b5d83c97c1141b6d3b38cae92f9e4027592eff52172603abe8b77488fe687b109af6257dc56691f
+------------------------------------------------------------------------------------------------
+[Critical] <SSL_Security> SSL Connection Checking (Vector ID: SSL_URLS_NOT_IN_HTTPS):
+           URLs that are NOT under SSL (Total:4):
+               http://jb.com.bd/jb_products
+                   => Lbd/com/jb/janatabankoapp/ui/home/HomeFragment$onCreateView$5;->onClick(Landroid/view/View;)V
+               http://jb.com.bd/jb_services
+                   => Lbd/com/jb/janatabankoapp/ui/home/HomeFragment$onCreateView$6;->onClick(Landroid/view/View;)V
+               http://jbone.janatabank-bd.com/jbapps/api/
+                   => Lbd/com/jb/janatabankoapp/ApiClient$instance$2;->invoke()Lbd/com/jb/janatabankoapp/ApiService;
+               http://maps.google.com/maps?daddr=
+                   => Lbd/com/jb/janatabankoapp/AtmSearchActivity$onCreate$1;->invoke(Lbd/com/jb/janatabankoapp/Atm;)V
+                   => Lbd/com/jb/janatabankoapp/BranchDetailsActivity$onCreate$1;->onClick(Landroid/view/View;)V
+[Warning]  External Storage Accessing (Vector ID: EXTERNAL_STORAGE):
+           External storage access found (Remember DO NOT write important files to external storages):
+               => Landroidx/core/content/FileProvider;->parsePathStrategy(Landroid/content/Context;
+                    Ljava/lang/String;)Landroidx/core/content/FileProvider$PathStrategy; (0xc8) --->
+                    Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+               => Landroidx/core/os/EnvironmentCompat;->getStorageState(Ljava/io/File;)Ljava/lang/String; (0x1e) --->
+                    Landroid/os/Environment;->getExternalStorageDirectory()Ljava/io/File;
+[Notice]  AndroidManifest Adb Backup Checking (Vector ID: ALLOW_BACKUP):
+           ADB Backup is ENABLED for this app (default: ENABLED). ADB Backup is a good tool for backing up all of your files. If it's open
+           for this app, people who have your phone can copy all of the sensitive data for this app in your phone (Prerequisite: 1.Unlock
+           phone's screen 2.Open the developer mode). The sensitive data may include lifetime access token, username or password, etc.
+           Security case related to ADB Backup:
+           1.http://www.securityfocus.com/archive/1/530288/30/0/threaded
+           2.http://blog.c22.cc/advisories/cve-2013-5112-evernote-android-insecure-storage-of-pin-data-bypass-of-pin-protection/
+           3.http://nelenkov.blogspot.co.uk/2012/06/unpacking-android-backups.html
+           Reference: http://developer.android.com/guide/topics/manifest/application-element.html#allowbackup
+[Notice]  File Unsafe Delete Checking (Vector ID: FILE_DELETE):
+           Everything you delete may be recovered by any user or attacker, especially rooted devices.
+           Please make sure do not use "file.delete()" to delete essential files.
+           Check this video: https://www.youtube.com/watch?v=tGw1fxUD-uY
+               => Landroidx/core/content/FileProvider;->delete(Landroid/net/Uri; Ljava/lang/String; [Ljava/lang/String;)I (0xc) --->
+                    Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromInputStream(Landroid/content/Context;
+                    Ljava/io/InputStream;)Landroid/graphics/Typeface; (0x1c) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromInputStream(Landroid/content/Context;
+                    Ljava/io/InputStream;)Landroid/graphics/Typeface; (0x34) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromInputStream(Landroid/content/Context;
+                    Ljava/io/InputStream;)Landroid/graphics/Typeface; (0x3e) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromInputStream(Landroid/content/Context;
+                    Ljava/io/InputStream;)Landroid/graphics/Typeface; (0x46) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromResourcesFontFile(Landroid/content/Context;
+                    Landroid/content/res/Resources; I Ljava/lang/String; I)Landroid/graphics/Typeface; (0x1c) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromResourcesFontFile(Landroid/content/Context;
+                    Landroid/content/res/Resources; I Ljava/lang/String; I)Landroid/graphics/Typeface; (0x34) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromResourcesFontFile(Landroid/content/Context;
+                    Landroid/content/res/Resources; I Ljava/lang/String; I)Landroid/graphics/Typeface; (0x3e) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatBaseImpl;->createFromResourcesFontFile(Landroid/content/Context;
+                    Landroid/content/res/Resources; I Ljava/lang/String; I)Landroid/graphics/Typeface; (0x46) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatUtil;->copyToDirectBuffer(Landroid/content/Context; Landroid/content/res/Resources;
+                    I)Ljava/nio/ByteBuffer; (0x1c) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatUtil;->copyToDirectBuffer(Landroid/content/Context; Landroid/content/res/Resources;
+                    I)Ljava/nio/ByteBuffer; (0x2c) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/graphics/TypefaceCompatUtil;->copyToDirectBuffer(Landroid/content/Context; Landroid/content/res/Resources;
+                    I)Ljava/nio/ByteBuffer; (0x36) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->delete()V (0x4) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->delete()V (0xe) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->failWrite(Ljava/io/FileOutputStream;)V (0x14) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->finishWrite(Ljava/io/FileOutputStream;)V (0x14) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->openRead()Ljava/io/FileInputStream; (0x14) ---> Ljava/io/File;->delete()Z
+               => Landroidx/core/util/AtomicFile;->startWrite()Ljava/io/FileOutputStream; (0x7e) ---> Ljava/io/File;->delete()Z
+               => Lcom/google/android/gms/iid/zzn;->zzg(Landroid/content/Context; Ljava/lang/String;)V (0x14) ---> Ljava/io/File;->delete()Z
+               => Lcom/google/android/gms/iid/zzn;->zzi(Landroid/content/Context;)V (0x34) ---> Ljava/io/File;->delete()Z
+               => Landroidx/documentfile/provider/RawDocumentFile;->deleteContents(Ljava/io/File;)Z (0x32) ---> Ljava/io/File;->delete()Z
+               => Landroidx/documentfile/provider/RawDocumentFile;->delete()Z (0xe) ---> Ljava/io/File;->delete()Z
+               => Lokhttp3/internal/io/FileSystem$1;->delete(Ljava/io/File;)V (0x0) ---> Ljava/io/File;->delete()Z
+               => Lokhttp3/internal/io/FileSystem$1;->deleteContents(Ljava/io/File;)V (0x2a) ---> Ljava/io/File;->delete()Z
+               => Lcom/google/android/gms/common/data/BitmapTeleporter;->zabz()Ljava/io/FileOutputStream; (0x32) --->
+                    Ljava/io/File;->delete()Z
+               => Lkotlin/io/FilesKt__UtilsKt;->copyRecursively(Ljava/io/File; Ljava/io/File; Z Lkotlin/jvm/functions/Function2;)Z (0x130)
+                    ---> Ljava/io/File;->delete()Z
+               => Lkotlin/io/FilesKt__UtilsKt;->copyTo(Ljava/io/File; Ljava/io/File; Z I)Ljava/io/File; (0x30) --->
+                    Ljava/io/File;->delete()Z
+               => Lkotlin/io/FilesKt__UtilsKt;->createTempDir(Ljava/lang/String; Ljava/lang/String; Ljava/io/File;)Ljava/io/File; (0x12)
+                    ---> Ljava/io/File;->delete()Z
+               => Lkotlin/io/FilesKt__UtilsKt;->deleteRecursively(Ljava/io/File;)Z (0x3a) ---> Ljava/io/File;->delete()Z
+[Notice] <Debug><Hacker> Codes for Checking Android Debug Mode (Vector ID: HACKER_DEBUGGABLE_CHECK):
+           Found codes for checking "ApplicationInfo.FLAG_DEBUGGABLE" in AndroidManifest.xml:
+               => Lcom/google/android/gms/common/GoogleSignatureVerifier;->zza (Ljava/lang/String; I)Lcom/google/android/gms/common/zzm;
+               => Lcom/google/android/gms/common/GoogleSignatureVerifier;->zzc (Ljava/lang/String;)Lcom/google/android/gms/common/zzm;
+[Notice] <Signature><Hacker> Getting Signature Code Checking (Vector ID: HACKER_SIGNATURE_CHECK):
+           This app has code checking the package signature in the code. It might be used to check for whether the app is hacked by the
+           attackers.
+               => Landroidx/core/provider/FontsContractCompat;->getProvider(Landroid/content/pm/PackageManager;
+                    Landroidx/core/provider/FontRequest; Landroid/content/res/Resources;)Landroid/content/pm/ProviderInfo; (0x36) --->
+                    Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String; I)Landroid/content/pm/PackageInfo;
+               => Lcom/google/android/gms/common/GooglePlayServicesUtilLight;->zza(Landroid/content/Context; Z I)I (0x50) --->
+                    Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String; I)Landroid/content/pm/PackageInfo;
+               => Lcom/google/android/gms/common/util/UidVerifier;->isGooglePlayServicesUid(Landroid/content/Context; I)Z (0x20) --->
+                    Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String; I)Landroid/content/pm/PackageInfo;
+               => Lcom/google/android/gms/common/wrappers/PackageManagerWrapper;->zza(Ljava/lang/String; I
+                    I)Landroid/content/pm/PackageInfo; (0x10) ---> Landroid/content/pm/PackageManager;->getPackageInfo(Ljava/lang/String;
+                    I)Landroid/content/pm/PackageInfo;
+[Notice]  Security Classes Checking (Vector ID: Security_Classes):
+           Find some security-related class names:
+               Landroidx/core/content/res/ConfigurationHelper;
+               Landroidx/core/graphics/ImageDecoderKt$decodeBitmap$1;
+               Landroidx/core/graphics/ImageDecoderKt$decodeDrawable$1;
+               Landroidx/core/graphics/ImageDecoderKt;
+               Landroidx/core/os/ConfigurationCompat;
+               Landroidx/core/view/ViewConfigurationCompat;
+               Landroidx/fragment/app/FragmentActivity$NonConfigurationInstances;
+               Landroidx/fragment/app/FragmentManagerNonConfig;
+               Landroidx/navigation/ui/AppBarConfiguration$1;
+               Landroidx/navigation/ui/AppBarConfiguration$Builder;
+               Landroidx/navigation/ui/AppBarConfiguration$OnNavigateUpListener;
+               Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;
+               Landroidx/recyclerview/widget/AsyncDifferConfig$Builder;
+               Landroidx/recyclerview/widget/AsyncDifferConfig;
+               Lbd/com/jb/janatabankoapp/BuildConfig;
+               Lbd/com/jb/janatabankoapp/Constants;
+               Lcom/facebook/shimmer/BuildConfig;
+               Lcom/google/android/gms/common/api/GoogleApi$Settings$Builder;
+               Lcom/google/android/gms/common/api/GoogleApi$Settings;
+               Lcom/google/android/gms/common/config/GservicesValue$zza;
+               Lcom/google/android/gms/common/config/GservicesValue;
+               Lcom/google/android/gms/common/internal/ClientSettings$Builder;
+               Lcom/google/android/gms/common/internal/ClientSettings$OptionalApiSettings;
+               Lcom/google/android/gms/common/internal/ClientSettings;
+               Lcom/google/android/gms/common/internal/Constants;
+               Lcom/google/android/gms/common/internal/constants/ListAppsActivityContract;
+               Lcom/google/android/gms/common/stats/LoggingConstants;
+               Lcom/google/android/gms/location/LocationSettingsRequest$Builder;
+               Lcom/google/android/gms/location/SettingsApi;
+               Lcom/google/android/gms/maps/UiSettings;
+               Lcom/google/android/gms/maps/internal/IUiSettingsDelegate;
+               Lcom/google/android/material/resources/TextAppearanceConfig;
+               Lcom/google/gson/internal/GsonBuildConfig;
+               Lkotlin/io/ConstantsKt;
+               Lkotlin/math/Constants;
+               Lokhttp3/internal/http2/Settings;
+               Lorg/intellij/lang/annotations/JdkConstants$AdjustableOrientation;
+               Lorg/intellij/lang/annotations/JdkConstants$BoxLayoutAxis;
+               Lorg/intellij/lang/annotations/JdkConstants$CalendarMonth;
+               Lorg/intellij/lang/annotations/JdkConstants$CursorType;
+               Lorg/intellij/lang/annotations/JdkConstants$FlowLayoutAlignment;
+               Lorg/intellij/lang/annotations/JdkConstants$FontStyle;
+               Lorg/intellij/lang/annotations/JdkConstants$HorizontalAlignment;
+               Lorg/intellij/lang/annotations/JdkConstants$InputEventMask;
+               Lorg/intellij/lang/annotations/JdkConstants$ListSelectionMode;
+               Lorg/intellij/lang/annotations/JdkConstants$PatternFlags;
+               Lorg/intellij/lang/annotations/JdkConstants$TabLayoutPolicy;
+               Lorg/intellij/lang/annotations/JdkConstants$TabPlacement;
+               Lorg/intellij/lang/annotations/JdkConstants$TitledBorderJustification;
+               Lorg/intellij/lang/annotations/JdkConstants$TitledBorderTitlePosition;
+               Lorg/intellij/lang/annotations/JdkConstants$TreeSelectionMode;
+               Lorg/intellij/lang/annotations/JdkConstants;
+               Lorg/intellij/lang/annotations/MagicConstant;
+               Lretrofit2/-$$Lambda$DefaultCallAdapterFactory$ExecutorCallbackCall$1$7JZMXmGMmuA6QMd5UmiN1rIhtW0;
+               Lretrofit2/http/FormUrlEncoded;
+               Landroidx/navigation/ui/AppBarConfigurationKt$sam$i$androidx_navigation_ui_AppBarConfiguration_OnNavigateUpListener$0;
+               Lbd/com/jb/janatabankoapp/HomeActivity$inlined$sam$i$androidx_navigation_ui_AppBarConfiguration_OnNavigateUpListener$0;
+               Lbd/com/jb/janatabankoapp/MainActivity$inlined$sam$i$androidx_navigation_ui_AppBarConfiguration_OnNavigateUpListener$0;
+               Lcom/google/android/gms/common/config/zza;
+               Lcom/google/android/gms/common/config/zzb;
+               Lcom/google/android/gms/common/config/zzc;
+               Lcom/google/android/gms/common/config/zzd;
+               Lcom/google/android/gms/common/config/zze;
+               Lcom/google/android/gms/location/LocationSettingsResponse;
+               Lcom/google/android/gms/location/LocationSettingsStatusCodes;
+               Lcom/google/android/gms/location/SettingsClient;
+               Lcom/google/android/gms/common/internal/SignInButtonConfig;
+               Lcom/google/android/gms/location/LocationSettingsRequest;
+               Lcom/google/android/gms/location/LocationSettingsResult;
+               Lcom/google/android/gms/location/LocationSettingsStates;
+               Landroidx/navigation/ui/AppBarConfigurationKt$AppBarConfiguration$1;
+               Landroidx/navigation/ui/AppBarConfigurationKt$AppBarConfiguration$2;
+               Landroidx/navigation/ui/AppBarConfigurationKt$AppBarConfiguration$3;
+               Lbd/com/jb/janatabankoapp/HomeActivity$onCreate$$inlined$AppBarConfiguration$1;
+               Lbd/com/jb/janatabankoapp/MainActivity$onCreate$$inlined$AppBarConfiguration$1;
+               Lkotlin/io/ConsoleKt$decoder$2;
+[Notice]  Security Methods Checking (Vector ID: Security_Methods):
+           Find some security-related method names:
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->canConstantState()Z
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->computeConstantSize()V
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getChangingConfigurations()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getConstantHeight()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getConstantMinimumHeight()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getConstantMinimumWidth()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getConstantPadding()Landroid/graphics/Rect;
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->getConstantWidth()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->isConstantSize()Z
+               Landroidx/appcompat/graphics/drawable/DrawableContainer$DrawableContainerState;->setConstantSize(Z)V
+               Landroidx/appcompat/graphics/drawable/DrawableContainer;->cloneConstantState()Landroidx/appcompat/graphics/drawable/DrawableC
+                    ontainer$DrawableContainerState;
+               Landroidx/appcompat/graphics/drawable/DrawableContainer;->getChangingConfigurations()I
+               Landroidx/appcompat/graphics/drawable/DrawableContainer;->getConstantState()Landroid/graphics/drawable/Drawable$ConstantState
+                    ;
+               Landroidx/appcompat/graphics/drawable/DrawableContainer;->setConstantState(Landroidx/appcompat/graphics/drawable/DrawableCont
+                    ainer$DrawableContainerState;)V
+               Landroidx/appcompat/graphics/drawable/DrawableWrapper;->getChangingConfigurations()I
+               Landroidx/appcompat/graphics/drawable/DrawableWrapper;->setChangingConfigurations(I)V
+               Landroidx/appcompat/widget/AppCompatTextHelper;->setAutoSizeTextTypeUniformWithConfiguration(I I I I)V
+               Landroidx/appcompat/widget/AppCompatTextViewAutoSizeHelper;->clearAutoSizeConfiguration()V
+               Landroidx/appcompat/widget/AppCompatTextViewAutoSizeHelper;->setupAutoSizeUniformPresetSizesConfiguration()Z
+               Landroidx/appcompat/widget/AppCompatTextViewAutoSizeHelper;->validateAndSetAutoSizeTextTypeUniformConfiguration(F F F)V
+               Landroidx/appcompat/widget/AppCompatTextViewAutoSizeHelper;->setAutoSizeTextTypeUniformWithConfiguration(I I I I)V
+               Landroidx/appcompat/widget/ResourcesWrapper;->getConfiguration()Landroid/content/res/Configuration;
+               Landroidx/appcompat/widget/ResourcesWrapper;->updateConfiguration(Landroid/content/res/Configuration;
+                    Landroid/util/DisplayMetrics;)V
+               Landroidx/appcompat/widget/TintTypedArray;->getChangingConfigurations()I
+               Landroidx/core/app/ShareCompat;->configureMenuItem(Landroid/view/Menu; I Landroidx/core/app/ShareCompat$IntentBuilder;)V
+               Landroidx/core/app/ShareCompat;->configureMenuItem(Landroid/view/MenuItem; Landroidx/core/app/ShareCompat$IntentBuilder;)V
+               Landroidx/core/content/res/FontResourcesParserCompat$FontFileResourceEntry;->getVariationSettings()Ljava/lang/String;
+               Landroidx/core/graphics/ImageDecoderKt$decodeBitmap$1;->onHeaderDecoded(Landroid/graphics/ImageDecoder;
+                    Landroid/graphics/ImageDecoder$ImageInfo; Landroid/graphics/ImageDecoder$Source;)V
+               Landroidx/core/graphics/ImageDecoderKt$decodeDrawable$1;->onHeaderDecoded(Landroid/graphics/ImageDecoder;
+                    Landroid/graphics/ImageDecoder$ImageInfo; Landroid/graphics/ImageDecoder$Source;)V
+               Landroidx/core/graphics/ImageDecoderKt;->decodeBitmap(Landroid/graphics/ImageDecoder$Source;
+                    Lkotlin/jvm/functions/Function3;)Landroid/graphics/Bitmap;
+               Landroidx/core/graphics/ImageDecoderKt;->decodeDrawable(Landroid/graphics/ImageDecoder$Source;
+                    Lkotlin/jvm/functions/Function3;)Landroid/graphics/drawable/Drawable;
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14$DrawableWrapperState;->canConstantState()Z
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14$DrawableWrapperState;->getChangingConfigurations()I
+               Landroidx/core/text/StringKt;->htmlEncode(Ljava/lang/String;)Ljava/lang/String;
+               Landroidx/core/text/TextUtilsCompat;->htmlEncode(Ljava/lang/String;)Ljava/lang/String;
+               Landroidx/core/widget/AutoSizeableTextView;->setAutoSizeTextTypeUniformWithConfiguration(I I I I)V
+               Landroidx/core/widget/TextViewCompat;->setAutoSizeTextTypeUniformWithConfiguration(Landroid/widget/TextView; I I I I)V
+               Landroidx/fragment/app/FragmentController;->restoreLoaderNonConfig(Landroidx/collection/SimpleArrayMap;)V
+               Landroidx/fragment/app/FragmentController;->retainLoaderNonConfig()Landroidx/collection/SimpleArrayMap;
+               Landroidx/fragment/app/FragmentController;->retainNestedNonConfig()Landroidx/fragment/app/FragmentManagerNonConfig;
+               Landroidx/fragment/app/FragmentController;->retainNonConfig()Ljava/util/List;
+               Landroidx/fragment/app/FragmentManagerNonConfig;->getChildNonConfigs()Ljava/util/List;
+               Landroidx/fragment/app/FragmentTransition;->configureEnteringExitingViews(Landroidx/fragment/app/FragmentTransitionImpl;
+                    Ljava/lang/Object; Landroidx/fragment/app/Fragment; Ljava/util/ArrayList; Landroid/view/View;)Ljava/util/ArrayList;
+               Landroidx/fragment/app/FragmentTransition;->configureSharedElementsOrdered(Landroidx/fragment/app/FragmentTransitionImpl;
+                    Landroid/view/ViewGroup; Landroid/view/View; Landroidx/collection/ArrayMap;
+                    Landroidx/fragment/app/FragmentTransition$FragmentContainerTransition; Ljava/util/ArrayList; Ljava/util/ArrayList;
+                    Ljava/lang/Object; Ljava/lang/Object;)Ljava/lang/Object;
+               Landroidx/fragment/app/FragmentTransition;->configureSharedElementsReordered(Landroidx/fragment/app/FragmentTransitionImpl;
+                    Landroid/view/ViewGroup; Landroid/view/View; Landroidx/collection/ArrayMap;
+                    Landroidx/fragment/app/FragmentTransition$FragmentContainerTransition; Ljava/util/ArrayList; Ljava/util/ArrayList;
+                    Ljava/lang/Object; Ljava/lang/Object;)Ljava/lang/Object;
+               Landroidx/fragment/app/FragmentTransition;->configureTransitionsOrdered(Landroidx/fragment/app/FragmentManagerImpl; I
+                    Landroidx/fragment/app/FragmentTransition$FragmentContainerTransition; Landroid/view/View;
+                    Landroidx/collection/ArrayMap;)V
+               Landroidx/fragment/app/FragmentTransition;->configureTransitionsReordered(Landroidx/fragment/app/FragmentManagerImpl; I
+                    Landroidx/fragment/app/FragmentTransition$FragmentContainerTransition; Landroid/view/View;
+                    Landroidx/collection/ArrayMap;)V
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration(Landroid/view/Menu;
+                    Landroidx/drawerlayout/widget/DrawerLayout;
+                    Lkotlin/jvm/functions/Function0;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration(Landroidx/navigation/NavGraph;
+                    Landroidx/drawerlayout/widget/DrawerLayout;
+                    Lkotlin/jvm/functions/Function0;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration(Ljava/util/Set;
+                    Landroidx/drawerlayout/widget/DrawerLayout;
+                    Lkotlin/jvm/functions/Function0;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration$default(Landroid/view/Menu;
+                    Landroidx/drawerlayout/widget/DrawerLayout; Lkotlin/jvm/functions/Function0; I
+                    Ljava/lang/Object;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration$default(Landroidx/navigation/NavGraph;
+                    Landroidx/drawerlayout/widget/DrawerLayout; Lkotlin/jvm/functions/Function0; I
+                    Ljava/lang/Object;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/navigation/ui/AppBarConfigurationKt;->AppBarConfiguration$default(Ljava/util/Set;
+                    Landroidx/drawerlayout/widget/DrawerLayout; Lkotlin/jvm/functions/Function0; I
+                    Ljava/lang/Object;)Landroidx/navigation/ui/AppBarConfiguration;
+               Landroidx/vectordrawable/graphics/drawable/AnimatedVectorDrawableCompat$AnimatedVectorDrawableCompatState;->getChangingConfig
+                    urations()I
+               Landroidx/vectordrawable/graphics/drawable/AnimatedVectorDrawableCompat$AnimatedVectorDrawableDelegateState;->getChangingConf
+                    igurations()I
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCompat$VectorDrawableCompatState;->getChangingConfigurations()I
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCompat$VectorDrawableDelegateState;->getChangingConfigurations()I
+               Lcom/google/android/gms/common/api/GoogleApi;->createClientSettingsBuilder()Lcom/google/android/gms/common/internal/ClientSet
+                    tings$Builder;
+               Lcom/google/android/gms/common/api/GoogleApiClient$Builder;->buildClientSettings()Lcom/google/android/gms/common/internal/Cli
+                    entSettings;
+               Lcom/google/android/gms/common/internal/ClientSettings$Builder;->setOptionalApiSettingsMap(Ljava/util/Map;)Lcom/google/androi
+                    d/gms/common/internal/ClientSettings$Builder;
+               Lcom/google/android/gms/common/internal/ClientSettings;->getOptionalApiSettings()Ljava/util/Map;
+               Lcom/google/android/gms/common/internal/ISignInButtonCreator;->newSignInButtonFromConfig(Lcom/google/android/gms/dynamic/IObj
+                    ectWrapper; Lcom/google/android/gms/common/internal/SignInButtonConfig;)Lcom/google/android/gms/dynamic/IObjectWrapper;
+               Lcom/google/android/gms/common/internal/SignInButtonImpl;->configure(Landroid/content/res/Resources; I I)V
+               Lcom/google/android/gms/common/internal/SignInButtonImpl;->configure(Landroid/content/res/Resources;
+                    Lcom/google/android/gms/common/internal/SignInButtonConfig;)V
+               Lcom/google/android/gms/common/server/response/FastJsonResponse;->setDecodedBytesInternal(Lcom/google/android/gms/common/serv
+                    er/response/FastJsonResponse$Field; Ljava/lang/String; [B)V
+               Lcom/google/android/gms/common/util/Base64Utils;->decode(Ljava/lang/String;)[B
+               Lcom/google/android/gms/common/util/Base64Utils;->decodeUrlSafe(Ljava/lang/String;)[B
+               Lcom/google/android/gms/common/util/Base64Utils;->decodeUrlSafeNoPadding(Ljava/lang/String;)[B
+               Lcom/google/android/gms/common/util/Base64Utils;->encode([B)Ljava/lang/String;
+               Lcom/google/android/gms/common/util/Base64Utils;->encodeUrlSafe([B)Ljava/lang/String;
+               Lcom/google/android/gms/common/util/Base64Utils;->encodeUrlSafeNoPadding([B)Ljava/lang/String;
+               Lcom/google/android/gms/common/util/HttpUtils;->decode(Ljava/lang/String; Ljava/lang/String;)Ljava/lang/String;
+               Lcom/google/android/gms/internal/base/zae;->canConstantState()Z
+               Lcom/google/android/gms/internal/base/zae;->getChangingConfigurations()I
+               Lcom/google/android/gms/internal/base/zae;->getConstantState()Landroid/graphics/drawable/Drawable$ConstantState;
+               Lcom/google/android/gms/internal/base/zag;->getConstantState()Landroid/graphics/drawable/Drawable$ConstantState;
+               Lcom/google/android/gms/internal/base/zah;->getChangingConfigurations()I
+               Lcom/google/android/gms/internal/base/zai;->getChangingConfigurations()I
+               Lcom/google/android/gms/location/LocationServices;->getSettingsClient(Landroid/app/Activity;)Lcom/google/android/gms/location
+                    /SettingsClient;
+               Lcom/google/android/gms/location/LocationServices;->getSettingsClient(Landroid/content/Context;)Lcom/google/android/gms/locat
+                    ion/SettingsClient;
+               Lcom/google/android/gms/location/SettingsApi;->checkLocationSettings(Lcom/google/android/gms/common/api/GoogleApiClient;
+                    Lcom/google/android/gms/location/LocationSettingsRequest;)Lcom/google/android/gms/common/api/PendingResult;
+               Lcom/google/android/gms/maps/GoogleMap;->getUiSettings()Lcom/google/android/gms/maps/UiSettings;
+               Lcom/google/android/gms/maps/internal/IGoogleMapDelegate;->getUiSettings()Lcom/google/android/gms/maps/internal/IUiSettingsDe
+                    legate;
+               Lcom/google/android/material/internal/CircularBorderDrawable$CircularBorderState;->getChangingConfigurations()I
+               Lcom/google/android/material/internal/CircularBorderDrawable;->getConstantState()Landroid/graphics/drawable/Drawable$Constant
+                    State;
+               Lcom/google/android/material/internal/DrawableUtils;->setContainerConstantState(Landroid/graphics/drawable/DrawableContainer;
+                    Landroid/graphics/drawable/Drawable$ConstantState;)Z
+               Lcom/google/android/material/internal/DrawableUtils;->setContainerConstantStateV9(Landroid/graphics/drawable/DrawableContaine
+                    r; Landroid/graphics/drawable/Drawable$ConstantState;)Z
+               Lcom/google/android/material/tabs/TabLayout;->configureTab(Lcom/google/android/material/tabs/TabLayout$Tab; I)V
+               Lkotlin/io/ConsoleKt;->getDecoder()Ljava/nio/charset/CharsetDecoder;
+               Lkotlin/io/ConsoleKt;->tryDecode(Ljava/nio/charset/CharsetDecoder; Ljava/nio/ByteBuffer; Ljava/nio/CharBuffer; Z)Z
+               Lokhttp3/CertificatePinner;->sha1(Ljava/security/cert/X509Certificate;)Lokio/ByteString;
+               Lokhttp3/CertificatePinner;->sha256(Ljava/security/cert/X509Certificate;)Lokio/ByteString;
+               Lokhttp3/FormBody$Builder;->addEncoded(Ljava/lang/String; Ljava/lang/String;)Lokhttp3/FormBody$Builder;
+               Lokhttp3/HttpUrl$Builder;->addEncodedPathSegment(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->addEncodedPathSegments(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->addEncodedQueryParameter(Ljava/lang/String; Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->encodedFragment(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->encodedPassword(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->encodedPath(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->encodedQuery(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->encodedUsername(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->reencodeForUri()Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->removeAllEncodedQueryParameters(Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->setEncodedPathSegment(I Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl$Builder;->setEncodedQueryParameter(Ljava/lang/String; Ljava/lang/String;)Lokhttp3/HttpUrl$Builder;
+               Lokhttp3/HttpUrl;->percentDecode(Ljava/lang/String; I I Z)Ljava/lang/String;
+               Lokhttp3/HttpUrl;->percentDecode(Ljava/lang/String; Z)Ljava/lang/String;
+               Lokhttp3/HttpUrl;->percentDecode(Ljava/util/List; Z)Ljava/util/List;
+               Lokhttp3/HttpUrl;->percentDecode(Lokio/Buffer; Ljava/lang/String; I I Z)V
+               Lokhttp3/HttpUrl;->percentEncoded(Ljava/lang/String; I I)Z
+               Lokhttp3/HttpUrl;->encodedFragment()Ljava/lang/String;
+               Lokhttp3/HttpUrl;->encodedPassword()Ljava/lang/String;
+               Lokhttp3/HttpUrl;->encodedPath()Ljava/lang/String;
+               Lokhttp3/HttpUrl;->encodedPathSegments()Ljava/util/List;
+               Lokhttp3/HttpUrl;->encodedQuery()Ljava/lang/String;
+               Lokhttp3/HttpUrl;->encodedUsername()Ljava/lang/String;
+               Lokhttp3/internal/Util;->decodeHexDigit(C)I
+               Lokhttp3/internal/Util;->decodeIpv4Suffix(Ljava/lang/String; I I [B I)Z
+               Lokhttp3/internal/Util;->decodeIpv6(Ljava/lang/String; I I)Ljava/net/InetAddress;
+               Lokhttp3/internal/connection/ConnectionSpecSelector;->configureSecureSocket(Ljavax/net/ssl/SSLSocket;)Lokhttp3/ConnectionSpec
+                    ;
+               Lokhttp3/internal/http2/Hpack$Writer;->setHeaderTableSizeSetting(I)V
+               Lokhttp3/internal/http2/Http2Connection$Listener;->onSettings(Lokhttp3/internal/http2/Http2Connection;)V
+               Lokhttp3/internal/http2/Http2Connection;->setSettings(Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/http2/Http2Reader$Handler;->ackSettings()V
+               Lokhttp3/internal/http2/Http2Reader$Handler;->settings(Z Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/http2/Http2Reader;->readSettings(Lokhttp3/internal/http2/Http2Reader$Handler; I B I)V
+               Lokhttp3/internal/http2/Http2Writer;->applyAndAckSettings(Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/http2/Http2Writer;->settings(Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/http2/Huffman;->decode([B)[B
+               Lokhttp3/internal/http2/Huffman;->encode(Lokio/ByteString; Lokio/BufferedSink;)V
+               Lokhttp3/internal/http2/Huffman;->encodedLength(Lokio/ByteString;)I
+               Lokhttp3/internal/platform/Platform;->configureSslSocketFactory(Ljavax/net/ssl/SSLSocketFactory;)V
+               Lokhttp3/internal/platform/Platform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String; Ljava/util/List;)V
+               Lokio/Base64;->decode(Ljava/lang/String;)[B
+               Lokio/Base64;->encode([B)Ljava/lang/String;
+               Lokio/Base64;->encode([B [B)Ljava/lang/String;
+               Lokio/Base64;->encodeUrl([B)Ljava/lang/String;
+               Lokio/ByteString;->decodeBase64(Ljava/lang/String;)Lokio/ByteString;
+               Lokio/ByteString;->decodeHex(Ljava/lang/String;)Lokio/ByteString;
+               Lokio/ByteString;->decodeHexDigit(C)I
+               Lokio/ByteString;->encodeString(Ljava/lang/String; Ljava/nio/charset/Charset;)Lokio/ByteString;
+               Lokio/ByteString;->encodeUtf8(Ljava/lang/String;)Lokio/ByteString;
+               Lokio/ByteString;->hmacSha1(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/ByteString;->hmacSha256(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/ByteString;->hmacSha512(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/ByteString;->md5()Lokio/ByteString;
+               Lokio/ByteString;->sha1()Lokio/ByteString;
+               Lokio/ByteString;->sha256()Lokio/ByteString;
+               Lokio/ByteString;->sha512()Lokio/ByteString;
+               Lretrofit2/http/Field;->encoded()Z
+               Lretrofit2/http/FieldMap;->encoded()Z
+               Lretrofit2/http/Part;->encoding()Ljava/lang/String;
+               Lretrofit2/http/PartMap;->encoding()Ljava/lang/String;
+               Lretrofit2/http/Path;->encoded()Z
+               Lretrofit2/http/Query;->encoded()Z
+               Lretrofit2/http/QueryMap;->encoded()Z
+               Lretrofit2/http/QueryName;->encoded()Z
+               Landroidx/appcompat/app/WindowDecorActionBar;->configureTab(Landroidx/appcompat/app/ActionBar$Tab; I)V
+               Landroidx/appcompat/graphics/drawable/StateListDrawable;->cloneConstantState()Landroidx/appcompat/graphics/drawable/DrawableC
+                    ontainer$DrawableContainerState;
+               Landroidx/appcompat/graphics/drawable/StateListDrawable;->cloneConstantState()Landroidx/appcompat/graphics/drawable/StateList
+                    Drawable$StateListState;
+               Landroidx/appcompat/graphics/drawable/StateListDrawable;->setConstantState(Landroidx/appcompat/graphics/drawable/DrawableCont
+                    ainer$DrawableContainerState;)V
+               Landroidx/appcompat/widget/AppCompatButton;->setAutoSizeTextTypeUniformWithConfiguration(I I I I)V
+               Landroidx/appcompat/widget/AppCompatTextView;->setAutoSizeTextTypeUniformWithConfiguration(I I I I)V
+               Landroidx/constraintlayout/solver/ArrayRow;->ensurePositiveConstant()V
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14;->getChangingConfigurations()I
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14;->getConstantState()Landroid/graphics/drawable/Drawable$ConstantState;
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14;->mutateConstantState()Landroidx/core/graphics/drawable/WrappedDrawable
+                    Api14$DrawableWrapperState;
+               Landroidx/core/graphics/drawable/WrappedDrawableApi14;->setChangingConfigurations(I)V
+               Landroidx/fragment/app/FragmentManagerImpl;->retainNonConfig()Landroidx/fragment/app/FragmentManagerNonConfig;
+               Landroidx/fragment/app/FragmentManagerImpl;->saveNonConfig()V
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCommon;->setChangingConfigurations(I)V
+               Lcom/google/android/gms/common/internal/zah;->newSignInButtonFromConfig(Lcom/google/android/gms/dynamic/IObjectWrapper;
+                    Lcom/google/android/gms/common/internal/SignInButtonConfig;)Lcom/google/android/gms/dynamic/IObjectWrapper;
+               Lcom/google/android/gms/internal/location/zzbk;->checkLocationSettings(Lcom/google/android/gms/common/api/GoogleApiClient;
+                    Lcom/google/android/gms/location/LocationSettingsRequest;)Lcom/google/android/gms/common/api/PendingResult;
+               Lcom/google/android/gms/location/LocationSettingsResponse;->getLocationSettingsStates()Lcom/google/android/gms/location/Locat
+                    ionSettingsStates;
+               Lcom/google/android/gms/location/SettingsClient;->checkLocationSettings(Lcom/google/android/gms/location/LocationSettingsRequ
+                    est;)Lcom/google/android/gms/tasks/Task;
+               Lcom/google/android/gms/maps/internal/zzg;->getUiSettings()Lcom/google/android/gms/maps/internal/IUiSettingsDelegate;
+               Lokhttp3/FormBody;->encodedName(I)Ljava/lang/String;
+               Lokhttp3/FormBody;->encodedValue(I)Ljava/lang/String;
+               Lokhttp3/internal/connection/RealConnection;->onSettings(Lokhttp3/internal/http2/Http2Connection;)V
+               Lokhttp3/internal/http2/Http2Connection$ReaderRunnable;->ackSettings()V
+               Lokhttp3/internal/http2/Http2Connection$ReaderRunnable;->applyAndAckSettings(Z Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/http2/Http2Connection$ReaderRunnable;->settings(Z Lokhttp3/internal/http2/Settings;)V
+               Lokhttp3/internal/platform/AndroidPlatform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String;
+                    Ljava/util/List;)V
+               Lokhttp3/internal/platform/ConscryptPlatform;->configureSslSocketFactory(Ljavax/net/ssl/SSLSocketFactory;)V
+               Lokhttp3/internal/platform/ConscryptPlatform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String;
+                    Ljava/util/List;)V
+               Lokhttp3/internal/platform/Jdk8WithJettyBootPlatform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String;
+                    Ljava/util/List;)V
+               Lokhttp3/internal/platform/Jdk9Platform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String;
+                    Ljava/util/List;)V
+               Lokio/SegmentedByteString;->hmacSha1(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/SegmentedByteString;->hmacSha256(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/SegmentedByteString;->md5()Lokio/ByteString;
+               Lokio/SegmentedByteString;->sha1()Lokio/ByteString;
+               Lokio/SegmentedByteString;->sha256()Lokio/ByteString;
+               Landroidx/appcompat/graphics/drawable/AnimatedStateListDrawableCompat;->cloneConstantState()Landroidx/appcompat/graphics/draw
+                    able/AnimatedStateListDrawableCompat$AnimatedStateListState;
+               Landroidx/appcompat/graphics/drawable/AnimatedStateListDrawableCompat;->cloneConstantState()Landroidx/appcompat/graphics/draw
+                    able/DrawableContainer$DrawableContainerState;
+               Landroidx/appcompat/graphics/drawable/AnimatedStateListDrawableCompat;->cloneConstantState()Landroidx/appcompat/graphics/draw
+                    able/StateListDrawable$StateListState;
+               Landroidx/appcompat/graphics/drawable/AnimatedStateListDrawableCompat;->getChangingConfigurations()I
+               Landroidx/appcompat/graphics/drawable/AnimatedStateListDrawableCompat;->setConstantState(Landroidx/appcompat/graphics/drawabl
+                    e/DrawableContainer$DrawableContainerState;)V
+               Landroidx/core/graphics/drawable/WrappedDrawableApi21;->mutateConstantState()Landroidx/core/graphics/drawable/WrappedDrawable
+                    Api14$DrawableWrapperState;
+               Landroidx/fragment/app/FragmentActivity;->getLastCustomNonConfigurationInstance()Ljava/lang/Object;
+               Landroidx/fragment/app/FragmentActivity;->onRetainCustomNonConfigurationInstance()Ljava/lang/Object;
+               Landroidx/fragment/app/FragmentActivity;->onRetainNonConfigurationInstance()Ljava/lang/Object;
+               Landroidx/vectordrawable/graphics/drawable/AnimatedVectorDrawableCompat;->getChangingConfigurations()I
+               Landroidx/vectordrawable/graphics/drawable/AnimatedVectorDrawableCompat;->getConstantState()Landroid/graphics/drawable/Drawab
+                    le$ConstantState;
+               Landroidx/vectordrawable/graphics/drawable/AnimatedVectorDrawableCompat;->setChangingConfigurations(I)V
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCompat;->getChangingConfigurations()I
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCompat;->getConstantState()Landroid/graphics/drawable/Drawable$Const
+                    antState;
+               Landroidx/vectordrawable/graphics/drawable/VectorDrawableCompat;->setChangingConfigurations(I)V
+               Lcom/google/android/gms/common/internal/GmsClient;->getClientSettings()Lcom/google/android/gms/common/internal/ClientSettings
+                    ;
+               Lcom/google/android/gms/common/server/response/SafeParcelResponse;->setDecodedBytesInternal(Lcom/google/android/gms/common/se
+                    rver/response/FastJsonResponse$Field; Ljava/lang/String; [B)V
+               Lcom/google/android/gms/location/LocationSettingsResult;->getLocationSettingsStates()Lcom/google/android/gms/location/Locatio
+                    nSettingsStates;
+               Lokhttp3/internal/platform/Android10Platform;->configureTlsExtensions(Ljavax/net/ssl/SSLSocket; Ljava/lang/String;
+                    Ljava/util/List;)V
+               Lokio/Buffer;->hmacSha1(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/Buffer;->hmacSha256(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/Buffer;->hmacSha512(Lokio/ByteString;)Lokio/ByteString;
+               Lokio/Buffer;->md5()Lokio/ByteString;
+               Lokio/Buffer;->sha1()Lokio/ByteString;
+               Lokio/Buffer;->sha256()Lokio/ByteString;
+               Lokio/Buffer;->sha512()Lokio/ByteString;
+               Lokio/HashingSink;->hmacSha1(Lokio/Sink; Lokio/ByteString;)Lokio/HashingSink;
+               Lokio/HashingSink;->hmacSha256(Lokio/Sink; Lokio/ByteString;)Lokio/HashingSink;
+               Lokio/HashingSink;->hmacSha512(Lokio/Sink; Lokio/ByteString;)Lokio/HashingSink;
+               Lokio/HashingSink;->md5(Lokio/Sink;)Lokio/HashingSink;
+               Lokio/HashingSink;->sha1(Lokio/Sink;)Lokio/HashingSink;
+               Lokio/HashingSink;->sha256(Lokio/Sink;)Lokio/HashingSink;
+               Lokio/HashingSink;->sha512(Lokio/Sink;)Lokio/HashingSink;
+               Lokio/HashingSource;->hmacSha1(Lokio/Source; Lokio/ByteString;)Lokio/HashingSource;
+               Lokio/HashingSource;->hmacSha256(Lokio/Source; Lokio/ByteString;)Lokio/HashingSource;
+               Lokio/HashingSource;->md5(Lokio/Source;)Lokio/HashingSource;
+               Lokio/HashingSource;->sha1(Lokio/Source;)Lokio/HashingSource;
+               Lokio/HashingSource;->sha256(Lokio/Source;)Lokio/HashingSource;
+               Lcom/google/android/gms/signin/internal/SignInClientImpl;->createBundleFromClientSettings(Lcom/google/android/gms/common/inte
+                    rnal/ClientSettings;)Landroid/os/Bundle;
+               Lkotlin/text/StringsKt__StringsJVMKt;->decodeToString([B)Ljava/lang/String;
+               Lkotlin/text/StringsKt__StringsJVMKt;->decodeToString([B I I Z)Ljava/lang/String;
+               Lkotlin/text/StringsKt__StringsJVMKt;->decodeToString$default([B I I Z I Ljava/lang/Object;)Ljava/lang/String;
+               Lkotlin/text/StringsKt__StringsJVMKt;->encodeToByteArray(Ljava/lang/String;)[B
+               Lkotlin/text/StringsKt__StringsJVMKt;->encodeToByteArray(Ljava/lang/String; I I Z)[B
+               Lkotlin/text/StringsKt__StringsJVMKt;->encodeToByteArray$default(Ljava/lang/String; I I Z I Ljava/lang/Object;)[B
+[Info] <Command> Runtime Command Checking (Vector ID: COMMAND):
+           This app is not using critical function 'Runtime.getRuntime().exec("...")'.
+[Info] <Command> Executing "root" or System Privilege Checking (Vector ID: COMMAND_MAYBE_SYSTEM):
+           Did not find codes checking "root" permission(su) or getting system permission (It's still possible we did not find out).
+[Info] <Database> SQLiteDatabase Transaction Deprecated Checking (Vector ID: DB_DEPRECATED_USE1):
+           Ignore checking "SQLiteDatabase:beginTransactionNonExclusive" because your set minSdk >= 11.
+[Info] <Database> Android SQLite Databases Encryption (SQLite Encryption Extension (SEE)) (Vector ID: DB_SEE):
+           This app is "NOT" using SQLite Encryption Extension (SEE) on Android (http://www.sqlite.org/android) to encrypt or decrpyt
+           databases.
+[Info] <Database> Android SQLite Databases Encryption (SQLCipher) (Vector ID: DB_SQLCIPHER):
+           This app is "NOT" using SQLCipher(http://sqlcipher.net/) to encrypt or decrpyt databases.
+[Info] <Database><#CVE-2011-3901#> Android SQLite Databases Vulnerability Checking (Vector ID: DB_SQLITE_JOURNAL):
+           This app is "NOT" using Android SQLite databases.
+[Info] <Debug> Android Debug Mode Checking (Vector ID: DEBUGGABLE):
+           DEBUG mode is OFF(android:debuggable="false") in AndroidManifest.xml.
+[Info]  Dynamic Code Loading (Vector ID: DYNAMIC_CODE_LOADING):
+           No dynamic code loading(DexClassLoader) found.
+[Info] <#BID 64208, CVE-2013-6271#> Fragment Vulnerability Checking (Vector ID: FRAGMENT_INJECTION):
+           Did not detect the vulnerability of "Fragment" dynamically loading into "PreferenceActivity" or "SherlockPreferenceActivity"
+[Info] <Framework> Framework - MonoDroid (Vector ID: FRAMEWORK_MONODROID):
+           This app is NOT using MonoDroid Framework (http://xamarin.com/android).
+[Info] <Hacker> Base64 String Encryption (Vector ID: HACKER_BASE64_STRING_DECODE):
+           No encoded Base64 String or Urls found.
+[Info] <Database><Hacker> Key for Android SQLite Databases Encryption (Vector ID: HACKER_DB_KEY):
+           Did not find using the symmetric key(PRAGMA key) to encrypt the SQLite databases (It's still possible that it might use but we
+           did not find out).
+[Info] <Hacker> APK Installing Source Checking (Vector ID: HACKER_INSTALL_SOURCE_CHECK):
+           Did not detect this app checks for APK installer sources.
+[Info] <KeyStore><Hacker> KeyStore File Location (Vector ID: HACKER_KEYSTORE_LOCATION1):
+           Did not find any possible BKS keystores or certificate keystore file (Notice: It does not mean this app does not use keysotre):
+[Info] <KeyStore><Hacker> KeyStore Protection Checking (Vector ID: HACKER_KEYSTORE_NO_PWD):
+           Ignore checking KeyStore protected by password or not because you're not using KeyStore.
+[Info] <Hacker> Code Setting Preventing Screenshot Capturing (Vector ID: HACKER_PREVENT_SCREENSHOT_CHECK):
+           Did not detect this app has code setting preventing screenshot capturing.
+[Info]  HttpURLConnection Android Bug Checking (Vector ID: HTTPURLCONNECTION_BUG):
+           Ignore checking "http.keepAlive" because you're not using "HttpURLConnection" and min_Sdk > 8.
+[Info] <KeyStore> KeyStore Type Checking (Vector ID: KEYSTORE_TYPE_CHECK):
+           KeyStore 'BKS' type check OK
+[Info]  Google Cloud Messaging Suggestion (Vector ID: MANIFEST_GCM):
+           Nothing to suggest.
+[Info] <#CVE-2013-4787#> Master Key Type I Vulnerability (Vector ID: MASTER_KEY):
+           No Master Key Type I Vulnerability in this APK.
+[Info]  App Sandbox Permission Checking (Vector ID: MODE_WORLD_READABLE_OR_MODE_WORLD_WRITEABLE):
+           No security issues "MODE_WORLD_READABLE" or "MODE_WORLD_WRITEABLE" found on 'openOrCreateDatabase' or 'openOrCreateDatabase2' or
+           'getDir' or 'getSharedPreferences' or 'openFileOutput'
+[Info]  Native Library Loading Checking (Vector ID: NATIVE_LIBS_LOADING):
+           No native library loaded.
+[Info]  Native Methods Checking (Vector ID: NATIVE_METHODS):
+           No native method found.
+[Info]  AndroidManifest Dangerous ProtectionLevel of Permission Checking (Vector ID: PERMISSION_DANGEROUS):
+           No "dangerous" protection level customized permission found (AndroidManifest.xml).
+[Info]  AndroidManifest Exported Components Checking (Vector ID: PERMISSION_EXPORTED):
+           No exported components(except for Launcher) for receiving Android or outside applications' actions (AndroidManifest.xml).
+[Info]  AndroidManifest PermissionGroup Checking (Vector ID: PERMISSION_GROUP_EMPTY_VALUE):
+           PermissionGroup in permission tag of AndroidManifest sets correctly.
+[Info] <Implicit_Intent> Implicit Service Checking (Vector ID: PERMISSION_IMPLICIT_SERVICE):
+           No dangerous implicit service.
+[Info]  AndroidManifest "intent-filter" Settings Checking (Vector ID: PERMISSION_INTENT_FILTER_MISCONFIG):
+           "intent-filter" of AndroidManifest.xml check OK.
+[Info]  AndroidManifest Normal ProtectionLevel of Permission Checking (Vector ID: PERMISSION_NORMAL):
+           No default or "normal" protection level customized permission found (AndroidManifest.xml).
+[Info] <#CVE-2013-6272#> AndroidManifest Exported Lost Prefix Checking (Vector ID: PERMISSION_NO_PREFIX_EXPORTED):
+           No exported components that forgot to add "android:" prefix.
+[Info]  AndroidManifest ContentProvider Exported Checking (Vector ID: PERMISSION_PROVIDER_IMPLICIT_EXPORTED):
+           No exported "ContentProvider" found (AndroidManifest.xml).
+[Info] <Sensitive_Information> Getting IMEI and Device ID (Vector ID: SENSITIVE_DEVICE_ID):
+           Did not detect this app is getting the "device id(IMEI)" by "TelephonyManager.getDeviceId()" approach.
+[Info] <Sensitive_Information> Getting ANDROID_ID (Vector ID: SENSITIVE_SECURE_ANDROID_ID):
+           Did not detect this app is getting the 64-bit number "Settings.Secure.ANDROID_ID".
+[Info]  Codes for Sending SMS (Vector ID: SENSITIVE_SMS):
+           Did not detect this app has code for sending SMS messages (sendDataMessage, sendMultipartTextMessage or sendTextMessage).
+[Info] <System> AndroidManifest sharedUserId Checking (Vector ID: SHARED_USER_ID):
+           This app does not use "android.uid.system" sharedUserId.
+[Info] <SSL_Security> SSL Implementation Checking (Verifying Host Name in Custom Classes) (Vector ID: SSL_CN1):
+           Self-defined HOSTNAME VERIFIER checking OK.
+[Info] <SSL_Security> SSL Implementation Checking (Verifying Host Name in Fields) (Vector ID: SSL_CN2):
+           Critical vulnerability "ALLOW_ALL_HOSTNAME_VERIFIER" field setting or "AllowAllHostnameVerifier" class instance not found.
+[Info] <SSL_Security> SSL Implementation Checking (Insecure component) (Vector ID: SSL_CN3):
+           Did not detect SSLSocketFactory by insecure method "getInsecure".
+[Info] <SSL_Security> SSL Implementation Checking (HttpHost) (Vector ID: SSL_DEFAULT_SCHEME_NAME):
+           DEFAULT_SCHEME_NAME for HttpHost check: OK
+[Info] <SSL_Security> SSL Implementation Checking (WebViewClient for WebView) (Vector ID: SSL_WEBVIEW):
+           Did not detect critical usage of "WebViewClient"(MITM Vulnerability).
+[Info] <SSL_Security> SSL Certificate Verification Checking (Vector ID: SSL_X509):
+           Did not find vulnerable X509Certificate code.
+[Info]  Unnecessary Permission Checking (Vector ID: USE_PERMISSION_ACCESS_MOCK_LOCATION):
+           Permission 'android.permission.ACCESS_MOCK_LOCATION' sets correctly.
+[Info]  Accessing the Internet Checking (Vector ID: USE_PERMISSION_INTERNET):
+           No HTTP-related connection codes found.
+[Info]  AndroidManifest System Use Permission Checking (Vector ID: USE_PERMISSION_SYSTEM_APP):
+           No system-level critical use-permission found.
+[Info] <WebView> WebView Local File Access Attacks Checking (Vector ID: WEBVIEW_ALLOW_FILE_ACCESS):
+           Did not find potentially critical local file access settings.
+[Info] <WebView> WebView Potential XSS Attacks Checking (Vector ID: WEBVIEW_JS_ENABLED):
+           Did not detect "setJavaScriptEnabled(true)" in WebView.
+[Info] <WebView><Remote Code Execution><#CVE-2013-4710#> WebView RCE Vulnerability Checking (Vector ID: WEBVIEW_RCE):
+           WebView addJavascriptInterface vulnerabilities not found.
+------------------------------------------------------------
+AndroBugs analyzing time: 11.309109 secs
+Total elapsed time: 47.34236 secs
+<<< Analysis result has stored into database (analyze_engine_build: 2021020802, analyze_tag: Fund) >>>
