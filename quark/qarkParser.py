@@ -17,7 +17,7 @@ def create_dir(path):
 create_dir(newPath)
 files = [file for file in os.listdir(newPath) if 'json' in file]
 
-print(files)
+# print(files)
 
 for file in files:
     # Opening JSON file
