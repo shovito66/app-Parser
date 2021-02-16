@@ -44,36 +44,83 @@ for line in fileLines:
         # print(errorType)
         # print(errorRiskLevel.lower())
 
-        # tempData = {
-        #     "errorRiskLevel": errorRiskLevel,
-        #     "errorType": errorType,
-        #     "errorDescription": errorDescription,
-        # }
+        tempData = {
+            "errorRiskLevel": errorRiskLevel,
+            "errorType": errorType,
+            "errorDescription": errorDescription,
+        }
         dataUnsorteList.append({
             "errorRiskLevel": errorRiskLevel,
             "errorType": errorType,
             "errorDescription": errorDescription,
         })
-        # tempData.clear()
 
 
-nestedDataDictionary = dict.fromkeys(
-    riskLevelKeySet, dict.fromkeys(errorTypeKeySet, []))
+riskWiseData = dict.fromkeys(riskLevelKeySet)
+# errorWiseData = dict.fromkeys(errorTypeKeySet, [])
+
+for key in riskWiseData:
+    riskWiseData[key]= []
+# for key in errorWiseData:
+#     errorWiseData[key]= []
+
 
 for item in dataUnsorteList:
-    print(item)
     des = item["errorDescription"]
     risk = item["errorRiskLevel"]
     etype = item["errorType"]
-    if des and risk and etype:
-        nestedDataDictionary.get(risk).get(etype).append(des)
+    # print(risk in riskLevelKeySet)
+    data1 = {
+        "errorType":etype,
+        "errorDescription": des
+    }
 
-    # nestedDataDictionary[des][risk].append(etype)
+    data2 = {
+        "errorRiskLevel":risk,
+        "errorDescription": des
+    }
+
+    riskWiseData[risk].append(data1)
+    #errorWiseData[etype].append(data2)
 
 print("Total Info Found:{}".format(len(dataUnsorteList)))
-print("\n\n-------------APP PKG NAME:{}------------- \nMIN SDK:{}".format(pkgName,minSDK)) 
+print("\n\n------APP PKG NAME:{}------\nMIN SDK:{}".format(pkgName, minSDK))
+
+count = 0
+for key in riskWiseData:
+    count = count + len(riskWiseData[key])
+    print("Risk:{}\t\t\t\tTotal Error No:{}".format(key,len(riskWiseData[key])))
+
+
+# for key in errorWiseData:
+#     count = count + len( errorWiseData[key])
+#     print(key, '->',len( errorWiseData[key]))
+
+print("Total Info Found:{}".format(count))
+
+
+"""
+nestedDataDictionary = dict.fromkeys(
+    riskLevelKeySet, dict(dict.fromkeys(errorTypeKeySet)))
+
+for key, val in nestedDataDictionary.items():
+    for k in val:
+        nestedDataDictionary[key][k] = []
+
+for item in dataUnsorteList:
+    # print(item)
+    des = item["errorDescription"]
+    risk = item["errorRiskLevel"]
+    etype = item["errorType"]
+    # nestedDataDictionary[risk][etype].append(des)
+    nestedDataDictionary.get(item["errorRiskLevel"]).get(item["errorType"]).append(item["errorDescription"])
+
+
+print("Total Info Found:{}".format(len(dataUnsorteList)))
+print("\n\n-------------APP PKG NAME:{}------------- \nMIN SDK:{}".format(pkgName, minSDK))
+
 
 for key, value in nestedDataDictionary.items():
-        for k,v in value.items():
-            
-            print("Risk:{}\tVectorID:{}\t\tErrorDescription:{}".format(key,k,v))
+    for k, v in value.items():
+        print("Risk:{}\tVectorID:{}\t\tErrorDescription:{}".format(key, k, len(v)))
+"""

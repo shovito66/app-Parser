@@ -17,11 +17,11 @@ def create_dir(path):
 create_dir(newPath)
 files = [file for file in os.listdir(newPath) if 'json' in file]
 
-
+print(files)
 
 for file in files:
     # Opening JSON file
-    
+    print("Current File:{}".format(file))
     f = open(file) 
     # f = open('MTB (2.0.3)-Qark-Report.json',)
     data = json.load(f)
@@ -36,8 +36,8 @@ for file in files:
         categorySet.add(item["category"].lower())
         severitySet.add(item["severity"].lower())
 
-    nestedDictonary = dict.fromkeys(
-        categorySet, dict(dict.fromkeys(severitySet, [])))
+
+
     '''
     # Structure of nestedDictonary
     {
@@ -45,19 +45,60 @@ for file in files:
         value:{key->severitySet, value:[]}
     }
     '''
+
+    # nestedDictonary = dict.fromkeys(
+    #     categorySet, dict(dict.fromkeys(severitySet)))
+    
+    # for key, val in nestedDictonary.items():
+    #     for k in val:
+    #         nestedDictonary[key][k] = []
     # print(nestedDictonary)
     
+    #---------------------------NEWLY ADDED--------------------#
+    severityData = dict.fromkeys(severitySet)
+    categoryData = dict.fromkeys(categorySet)
+    for key in severityData:
+        severityData[key]= []
+    for key in categoryData:
+        categoryData[key]= []
 
     for item in data:
-        nestedDictonary[item["category"].lower()][item["severity"].lower()].append(item["name"])
-
-    print("\n\n-------------APP PKG NAME:{}-------------".format(pkgName))
-    for key, value in nestedDictonary.items():
-        for k,v in value.items():
-             # @@@@todo: need to modify this
-            print("Category:{}\t\tSevirity:{}\t\tNo:{}".format(key,k,len(v)))
+        #---------------------------NEWLY ADDED--------------------#
+        sData = {
+            "category":item["severity"].lower(),
+            "name":item["name"],
+        }
+        cData = {
+            "severity":item["severity"].lower(),
+            "name":item["name"],
+        }
+        severityData[item["severity"].lower()].append(sData) #new
+        categoryData[item["category"].lower()].append(cData)
+        #-------------------------------------------------
+        # nestedDictonary[item["category"].lower()][item["severity"].lower()].append(item["name"])  #not working
     
-    # Closing file
+    
+    
+    
+    print("\n\n-------------APP PKG NAME:{}-------------".format(pkgName))
+   #---------------------------NEWLY ADDED--------------------#
+    print("--------------Result based on SEVIRITY--------------")
+    for key in severityData:
+        # print(key, '->',len( severityData[key]))
+        print("Sevirity:{}\t\tNo:{}".format(key,len( severityData[key])))
+    
+    print("--------------Result based on CATEGORY--------------")
+    for key in categoryData:
+        print("Category:{}\t\tNo:{}".format(key,len( categoryData[key])))
+    #-----------------------------------------------------
+    
+    # for key, value in nestedDictonary.items():
+    #     for k,v in value.items():
+    #         c = c + len(v)
+    #          # @@@@todo: need to modify this
+    #         print("Category:{}\t\tSevirity:{}\t\tNo:{}".format(key,k,len(v)))
+    
+    # Closing file    
     f.close()
     print("\n---------------------------------------------------------------------------------------------\n---------------------------------------------------------------------------------------------")
 
